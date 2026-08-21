@@ -2,6 +2,7 @@ use colored::Colorize;
 use rand::RngExt;
 use std::cmp::Ordering;
 use std::io::{self, Write};
+use std::process;
 
 fn print_banner() {
     println!("{}", "-----------------------------".yellow());
@@ -12,13 +13,24 @@ fn print_banner() {
     println!("{}", "-----------------------------".yellow());
 }
 
+fn print_exit_banner() {
+    println!("\n{}", "-----------------------------".yellow());
+    println!("   {}", "💛 Thanks for playing!".bold().black().on_yellow());
+    println!("{}", "-----------------------------".yellow());
+}
+
 fn prompt(msg: &str) -> String {
     print!("{msg}");
     io::stdout().flush().expect("Failed to flush stdout");
     let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
+    // Catch EOF (Ctrl+D) or unexpected stdin closures gracefully
+    match io::stdin().read_line(&mut input) {
+        Ok(0) | Err(_) => {
+            print_exit_banner();
+            process::exit(0);
+        }
+        _ => {}
+    }
     input.trim().to_lowercase()
 }
 
@@ -28,6 +40,12 @@ fn clear_terminal() {
 }
 
 fn main() {
+    // Set up Ctrl+C Signal Handler
+    ctrlc::set_handler(move || {
+        print_exit_banner();
+        process::exit(0);
+    })
+    .expect("Error setting Ctrl+C handler");
     print_banner();
 
     loop {
@@ -35,7 +53,7 @@ fn main() {
         let mut attempts = 0;
 
         loop {
-            let input = prompt(&format!("{}", "\n>>".red().underline()));
+            let input = prompt(&format!("{}", "\n>> ".red().underline()));
             let Ok(guess) = input.parse::<u32>() else {
                 println!("{}", "⚠️  Please enter a valid positive number!".red());
                 continue;
@@ -69,14 +87,12 @@ fn main() {
         ));
 
         if !matches!(replay.as_str(), "y" | "yes") {
-            println!("{}", "-----------------------------".yellow());
-            println!("   {}", "💛 Thanks for playing!".bold().black().on_yellow());
-            println!("{}", "-----------------------------".yellow());
+            print_exit_banner();
             break;
         }
 
         clear_terminal();
-        println!("nRestarting ...\n");
+        println!("\nRestarting ...\n");
         print_banner();
     }
 }

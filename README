@@ -3,3 +3,16 @@
 
 # Usage guesscli
 .\guesscli.exe
+
+# Usage restcli
+
+restcli [OPTIONS] <URL>
+
+-m, --method <METHOD>    HTTP method (default: GET)
+-H, --header <KEY:VAL>   Add header (repeatable)
+-d, --data <DATA>        Request body
+-f, --file <FILE>        Body from file
+-o, --output <FILE>      Save response to file
+-v, --verbose            Verbose output
+-t, --time               Show response time
+--format <FORMAT>        auto|json|raw|pretty

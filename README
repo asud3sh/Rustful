@@ -1,19 +1,5 @@
-# Build and Release isthere
-cargo build --manifest-path .\isthere\Cargo.toml --release
+# Usage isthere
+.\isthere.exe google.com
 
-# Create and push the tag
-git tag isthere-v0.1.0
-git push origin isthere-v0.1.0
-
-# Publish GitHub release with attached binary
-gh release create isthere-v0.1.0 .\isthere\target\release\isthere.exe --title "isthere v0.1.0" --notes "Initial release of the isthere ping CLI tool."
-
-# Build guesscli
-cargo build --manifest-path .\guesscli\Cargo.toml --release
-
-# Create and push the tag
-git tag guesscli-v0.1.0
-git push origin guesscli-v0.1.0
-
-# Publish GitHub release with attached binary
-gh release create guesscli-v0.1.0 .\guesscli\target\release\guesscli.exe --title "guesscli v0.1.0" --notes "Initial release of guesscli."
+# Usage guesscli
+.\guesscli.exe

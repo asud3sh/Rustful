@@ -1,0 +1,22 @@
+╔══════════════════════════════════════════╗
+║    isthere: A simple TCP Ping Tool v0.1  ║
+╚══════════════════════════════════════════╝
+
+Testing google.com:443 with 5 attempts...
+
+Pinging google.com [2404:6800:4013:813::66] on port 443...
+
+[1/5] ✓ Reply from 2404:6800:4013:813::66: time=95.67ms
+[2/5] ✓ Reply from 2404:6800:4013:813::66: time=110.89ms
+[3/5] ✓ Reply from 2404:6800:4013:813::66: time=95.07ms
+[4/5] ✓ Reply from 2404:6800:4013:813::66: time=96.12ms
+[5/5] ✓ Reply from 2404:6800:4013:813::66: time=95.62ms
+
+---------------------------------------------
+google.com ping statistics
+---------------------------------------------
+Transmitted 5 packets, reveived 5, packet_lost 0.0%
+rtt min/avg/max = 95.07ms/98.67ms/110.89ms
+
+=======================================================
+

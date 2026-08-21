@@ -1,12 +1,15 @@
-# Usage isthere
-.\isthere.exe google.com
+### Rust Utils
 
-# Usage guesscli
-.\guesscli.exe
+**[isthere](./isthere/)** -  A simple TCP Ping Tool
 
-# Usage restcli
+```bash
+> isthere google.com
+```
 
-restcli [OPTIONS] <URL>
+**[restcli](./restcli/)** -  A simple REST API client Tool
+
+```bash
+> restcli [OPTIONS] <URL>
 
 -m, --method <METHOD>    HTTP method (default: GET)
 -H, --header <KEY:VAL>   Add header (repeatable)
@@ -16,3 +19,4 @@ restcli [OPTIONS] <URL>
 -v, --verbose            Verbose output
 -t, --time               Show response time
 --format <FORMAT>        auto|json|raw|pretty
+```

@@ -6,43 +6,102 @@ use std::time::Instant;
 use colored::Colorize;
 
 #[derive(Parser, Debug)]
-#[command(name = "restcli")]
-#[command(version = "0.1.0")]
-#[command(about = "A simple yet robust REST client", long_about = None)]
+#[command(
+    name = "restcli",
+    version = "0.1.0",
+    about = "A simple REST client for the command line",
+    long_about = "A simple REST client for the command line.\n\n\
+                  Send HTTP requests and display responses with timing information,\n\
+                  and JSON formatting.",
+    after_help = "EXAMPLES:\n\
+                  \x20 # GET request\n\
+                  \x20 restcli https://api.example.com/users\n\n\
+                  \x20 # POST with JSON\n\
+                  \x20 restcli -m POST -H 'Content-Type: application/json' -d '{\"name\":\"John\"}' https://api.example.com/users\n\n\
+                  \x20 # POST from file with auth\n\
+                  \x20 restcli -m POST -H 'Authorization: Bearer token' -f body.json https://api.example.com/users\n\n\
+                  \x20 # Verbose with timing\n\
+                  \x20 restcli -v -t https://api.example.com/users\n\n\
+                  \x20 # Save response to file\n\
+                  \x20 restcli -o response.json https://api.example.com/users"
+)]
 struct Cli {
     /// The URL to make a request to
+    #[arg(value_name = "URL")]
     url: String,
 
-    /// HTTP method to use
-    #[arg(short, long, default_value = "GET", value_parser = parse_method)]
+    /// HTTP method to use (GET, POST, PUT, DELETE, etc.)
+    #[arg(
+        short, 
+        long, 
+        default_value = "GET",
+        value_name = "METHOD",
+        value_parser = parse_method,
+        help_heading = "Request Options"
+    )]
     method: Method,
 
     /// Custom headers in the format "Key: Value" (can be used multiple times)
-    #[arg(short = 'H', long = "header", value_name = "KEY:VALUE")]
+    #[arg(
+        short = 'H', 
+        long = "header", 
+        value_name = "KEY:VALUE",
+        help_heading = "Request Options"
+    )]
     headers: Vec<String>,
 
     /// Data to send in the request body
-    #[arg(short = 'd', long = "data", conflicts_with = "file")]
+    #[arg(
+        short = 'd', 
+        long = "data", 
+        value_name = "DATA",
+        conflicts_with = "file",
+        help_heading = "Request Options"
+    )]
     data: Option<String>,
 
     /// Read request body from a file
-    #[arg(short = 'f', long = "file", value_name = "FILE")]
+    #[arg(
+        short = 'f', 
+        long = "file", 
+        value_name = "FILE",
+        help_heading = "Request Options"
+    )]
     file: Option<String>,
 
     /// Show detailed request/response information
-    #[arg(short = 'v', long = "verbose")]
+    #[arg(
+        short = 'v', 
+        long = "verbose",
+        help_heading = "Display Options"
+    )]
     verbose: bool,
 
     /// Show response time
-    #[arg(short = 't', long = "time")]
+    #[arg(
+        short = 't', 
+        long = "time",
+        help_heading = "Display Options"
+    )]
     show_time: bool,
 
     /// Output format for response
-    #[arg(long = "format", value_enum, default_value_t = OutputFormat::Auto)]
+    #[arg(
+        long = "format", 
+        value_enum, 
+        default_value_t = OutputFormat::Auto,
+        value_name = "FORMAT",
+        help_heading = "Display Options"
+    )]
     format: OutputFormat,
 
     /// Save response to a file
-    #[arg(short = 'o', long = "output", value_name = "FILE")]
+    #[arg(
+        short = 'o', 
+        long = "output", 
+        value_name = "FILE",
+        help_heading = "Display Options"
+    )]
     output: Option<String>,
 }
 
@@ -60,7 +119,7 @@ enum OutputFormat {
 
 fn parse_method(s: &str) -> Result<Method, String> {
     Method::from_str(&s.to_uppercase())
-        .map_err(|_| format!("Invalid HTTP method: '{s}'. Use GET, POST, PUT, DELETE, etc."))
+        .map_err(|_| format!("Invalid HTTP method: '{s}'. Use GET, POST, PUT, DELETE, PATCH, etc."))
 }
 
 fn parse_header(header_str: &str) -> Result<(String, String), String> {

@@ -1,0 +1,55 @@
+# Usage
+
+restcli [OPTIONS] <URL>
+
+-m, --method <METHOD>    HTTP method (default: GET)
+-H, --header <KEY:VAL>   Add header (repeatable)
+-d, --data <DATA>        Request body
+-f, --file <FILE>        Body from file
+-o, --output <FILE>      Save response to file
+-v, --verbose            Verbose output
+-t, --time               Show response time
+--format <FORMAT>        auto|json|raw|pretty
+
+
+# Examples : 
+
+GET
+restcli https://api.example.com/users
+
+POST JSON
+restcli -m POST -H "Content-Type: application/json" -d '{"name":"John"}' https://api.example.com/users
+
+POST from file with auth
+restcli -m POST -H "Authorization: Bearer token" -H "Content-Type: application/json" -f body.json https://api.example.com/users
+
+Verbose with timing
+restcli -v -t https://api.example.com/users
+
+Save response
+restcli -o response.json https://api.example.com/users
+
+Pretty JSON
+restcli --format pretty https://api.example.com/users
+
+# using shell variables for sensitive calls 
+
+Variables
+$token = "your-token"
+$url = "https://api.example.com/endpoint"
+$body = '{"key":"value"}'
+
+GET
+restcli -H "clientToken: $token" $url
+
+POST JSON
+restcli -m POST -H "clientToken: $token" -H "Content-Type: application/json" -d $body $url
+
+POST from file
+restcli -m POST -H "clientToken: $token" -H "Content-Type: application/json" -f body.json $url
+
+Verbose + timing
+restcli -v -t -H "clientToken: $token" $url
+
+Save response
+restcli -o response.json -H "clientToken: $token" $url

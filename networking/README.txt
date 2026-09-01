@@ -178,3 +178,35 @@ content-type: application/json
 content-length: 31
 
 {"id":0,"name":"","email":""}
+
+
+
+📚 Hour 3: TLS & Cryptography (60 min)
+
+TLS Fundamentals: (20 min)
+-----------------
+
+┌─────────────────────────────────────────────┐
+│ TLS 1.3 Handshake (1-RTT):                  │
+│ Client → ClientHello → Server               │
+│ Client ← ServerHello ← Server               │
+│ Client ← Certificate ← Server               │
+│ Client ← Finished ← Server                  │
+│ Client → Finished → Server                  │
+│ Client ↔ Encrypted Data ↔ Server            │
+└─────────────────────────────────────────────┘
+
+Encryption Types:
+• Symmetric: AES (same key)
+• Asymmetric: RSA, ECDHE (public/private)
+• Hashing: SHA-256 (integrity)
+• Signatures: ECDSA (authentication)
+
+Cipher Suite: TLS_AES_256_GCM_SHA384
+
+Rust TLS Implementation (40 min)
+--------------------------------
+
+> cargo run
+: HTTPS / TLS Server listening on https://localhost:8443
+

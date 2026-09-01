@@ -210,3 +210,203 @@ Rust TLS Implementation (40 min)
 > cargo run
 : HTTPS / TLS Server listening on https://localhost:8443
 
+
+📚 Hour 4: mTLS & Zero Trust Security (60 min)
+
+mTLS: Concepts (20 min)
+-----------------------
+
+                 CA
+            ┌──────────┐
+            │  ca.crt  │
+            └────┬─────┘
+                 │
+         signs both identities
+            ┌────┴──────┐
+            │           │
+            ▼           ▼
+      ┌─────────┐   ┌─────────┐
+      │ SERVER  │   │ CLIENT  │
+      │         │   │         │
+      │server   │   │client   │
+      │.crt     │   │.crt     │
+      │server   │   │client   │
+      │.key     │   │.key     │
+      └────┬────┘   └────┬────┘
+           │             │
+           │             │
+           │   mTLS      │
+           │◄───────────►│
+           │             │
+           │             │
+      verify client   verify server
+           │             │
+           └──────┬──────┘
+                  ▼
+            ENCRYPTED TLS
+
+
+Zero Trust Principles:
+1. Never trust, always verify
+2. Least privilege access
+3. Assume breach
+4. Micro-segmentation
+5. Continuous verification
+
+Certificate Chain:
+Root CA → Intermediate CA → Leaf Certificate
+
+
+mTLS: Implementation (40 min)
+-----------------------------
+
+Need to create 3 identities:
+
+CA
+├── ca.crt
+└── ca.key
+Server
+├── server.crt
+└── server.key
+Client
+├── client.crt
+└── client.key
+
+Generate CA:
+> openssl req -x509 -newkey rsa:2048 `
+  -keyout ca.key `
+  -out ca.crt `
+  -days 365 `
+  -nodes `
+  -subj "/CN=Rustful Test CA" `
+  -addext "basicConstraints=critical,CA:TRUE" `
+  -addext "keyUsage=critical,keyCertSign,cRLSign"
+
+CA Verification:
+> openssl x509 -in ca.crt -text -noout |
+    Select-String "CA:TRUE"
+
+
+----------------------------------------------------
+
+Generate the server private key and CSR:
+> openssl req -newkey rsa:2048 `
+  -keyout server.key `
+  -out server.csr `
+  -nodes `
+  -subj "/CN=localhost"
+
+The CN=localhost isn't enough by itself for modern TLS hostname validation. Therefore, we need to add the SAN extension to the CSR:
+
+Create a SAN extension for the server:
+> @"
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature,keyEncipherment
+extendedKeyUsage=serverAuth
+subjectAltName=DNS:localhost,IP:127.0.0.1
+"@ | Set-Content server.ext
+
+Sign the server CSR with the CA:
+> openssl x509 -req `
+  -in server.csr `
+  -CA ca.crt `
+  -CAkey ca.key `
+  -CAcreateserial `
+  -out server.crt `
+  -days 365 `
+  -extfile server.ext
+
+Verify the server certificate chain:
+> openssl verify -CAfile ca.crt server.crt
+
+----------------------------------------------------
+
+Generate the client private key and CSR:
+> openssl req -newkey rsa:2048 `
+  -keyout client.key `
+  -out client.csr `
+  -nodes `
+  -subj "/CN=client"
+
+Create a SAN extension for the client:
+> @"
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature,keyEncipherment
+extendedKeyUsage=clientAuth
+"@ | Set-Content client.ext
+
+Sign the client CSR with the CA:
+> openssl x509 -req `
+  -in client.csr `
+  -CA ca.crt `
+  -CAkey ca.key `
+  -CAcreateserial `
+  -out client.crt `
+  -days 365 `
+  -extfile client.ext
+
+
+Verify the client certificate chain:
+> openssl verify -CAfile ca.crt client.crt
+
+Final files:
+
+networking/
+│
+├── ca.crt
+├── ca.key
+│
+├── server.crt
+├── server.key
+├── server.csr
+├── server.ext
+│
+├── client.crt
+├── client.key
+├── client.csr
+└── client.ext
+
+
+Final Concept:
+
+           Rustful Test CA
+                │
+      ┌─────────┴─────────┐
+      │                   │
+      ▼                   ▼
+    server.crt           client.crt
+    serverAuth            clientAuth
+      │                   │
+      │ SAN:              │
+      │ localhost         │
+      │ 127.0.0.1         │
+      │                   │
+      ▼                   ▼
+   server.key          client.key
+
+
+CLIENT                                      SERVER
+  │                                            │
+  │──── TCP connection ──────────────────────► │
+  │                                            │
+  │◄──── server.crt ────────────────────────── │
+  │                                            │
+  │ verify server.crt                          │
+  │   ├─ signed by ca.crt? ✓                   │
+  │   ├─ valid dates? ✓                        │
+  │   ├─ serverAuth? ✓                         │
+  │   └─ SAN localhost? ✓                      │
+  │                                            │
+  │◄──── "give me your certificate" ────────── │
+  │                                            │
+  │──── client.crt ─────────────────────────►  │
+  │                                            │
+  │                              verify client.crt
+  │                                ├─ CA? ✓
+  │                                ├─ valid? ✓
+  │                                └─ clientAuth? ✓
+  │                                            │
+  │◄══════ encrypted TLS connection ═════════► │
+  │                                            │
+
+

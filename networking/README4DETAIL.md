@@ -1,35 +1,34 @@
 
-# NETWORKING, SECURITY AND DISTRIBUTED SYSTEMS WITH RUST ( 7 Hours/Day )
-
-# 7-DAY DEEP-DIVE CURRICULUM
+### NETWORKING, SECURITY AND DISTRIBUTED SYSTEMS WITH RUST ( 7 Hours/Day )
+> 7-DAY DEEP-DIVE CURRICULUM
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                    NETWORKING + SECURITY MASTERY                             │
 ├────────┬─────────────────────┬───────────────────────────────────────────────┤
 │ DAY 1  │ NETWORK FOUNDATIONS │ OSI/TCP-IP, Ethernet, ARP, IP, ICMP, routing  │
-│        │                     │ TCP, UDP, sockets, DNS, NAT, packet flow       │
+│        │                     │ TCP, UDP, sockets, DNS, NAT, packet flow      │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
 │ DAY 2  │ APPLICATION NETWORK │ HTTP/1.1, REST, JSON, caching, cookies,       │
-│        │ PROTOCOLS           │ proxies, reverse proxies, Axum                 │
+│        │ PROTOCOLS           │ proxies, reverse proxies, Axum                │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
 │ DAY 3  │ CRYPTO + TLS        │ cryptographic primitives, PKI, TLS 1.3,       │
-│        │                     │ certificate validation, HTTPS, rustls           │
+│        │                     │ certificate validation, HTTPS, rustls         │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
 │ DAY 4  │ mTLS + IDENTITY     │ CA, CSR, SAN, EKU, trust, client identity,    │
 │        │ + ZERO TRUST        │ authentication, authorization, Zero Trust     │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
 │ DAY 5  │ MODERN PROTOCOLS    │ HTTP/2, gRPC, Protobuf, streams, QUIC, HTTP/3 │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
-│ DAY 6  │ SECURITY ENGINEERING│ password security, JWT, OAuth concepts,      │
-│        │                     │ RBAC, rate limiting, threat modeling, logs   │
+│ DAY 6  │ SECURITY ENGINEERING│ password security, JWT, OAuth concepts,       │
+│        │                     │ RBAC, rate limiting, threat modeling, logs    │
 ├────────┼─────────────────────┼───────────────────────────────────────────────┤
-│ DAY 7  │ DISTRIBUTED SYSTEM  │ secure microservice, REST + gRPC + mTLS,     │
+│ DAY 7  │ DISTRIBUTED SYSTEM  │ secure microservice, REST + gRPC + mTLS,      │
 │        │ + FINAL PROJECT      │ observability, failure handling, testing     │
 └────────┴─────────────────────┴───────────────────────────────────────────────┘
 ```
 
-Recommended daily split:
+Planned daily split:
 
 ```text
 4–6 HOURS
@@ -64,15 +63,11 @@ I can debug it.
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 1 NETWORK FOUNDATIONS
+----------------------------------------------
 
-# DAY 1
-
-# NETWORK FOUNDATIONS
-
-======================================================================
-
-# DAY 1 BIG PICTURE
+### DAY 1 BIG PICTURE
 
 ```text
 APPLICATION
@@ -108,7 +103,7 @@ network
 
 ---
 
-# 1. WHAT IS A NETWORK?
+### 1. WHAT IS A NETWORK?
 
 A network allows independent computing systems to exchange information.
 
@@ -156,7 +151,7 @@ The lower layers handle the mechanics of delivery.
 
 ---
 
-# 2. NETWORKING PROBLEMS
+### 2. NETWORKING PROBLEMS
 
 A complete networking system must solve different problems.
 
@@ -199,7 +194,7 @@ No single protocol has to solve all of these.
 
 ---
 
-# 3. OSI MODEL
+### 3. OSI MODEL
 
 ```text
 7  APPLICATION
@@ -251,7 +246,7 @@ What responsibility belongs here?
 
 ---
 
-# 4. TCP/IP MODEL
+### 4. TCP/IP MODEL
 
 A more practical Internet model is:
 
@@ -287,7 +282,7 @@ The TCP/IP model is useful for understanding actual Internet protocol families.
 
 ---
 
-# 5. ENCAPSULATION
+### 5. ENCAPSULATION
 
 Application sends:
 
@@ -343,7 +338,7 @@ Application data
 
 ---
 
-# 6. ETHERNET AND MAC ADDRESSES
+### 6. ETHERNET AND MAC ADDRESSES
 
 IP is not the only addressing system.
 
@@ -377,7 +372,7 @@ An Ethernet frame contains source and destination MAC addresses.
 
 ---
 
-# 7. SWITCH VS ROUTER
+### 7. SWITCH VS ROUTER
 
 A switch primarily forwards frames within a local network.
 
@@ -415,7 +410,7 @@ ROUTER
 
 ---
 
-# 8. ARP
+### 8. ARP
 
 IPv4 hosts often need to discover:
 
@@ -460,7 +455,7 @@ IPv6 uses Neighbor Discovery rather than ARP.
 
 ---
 
-# 9. IP
+### 9. IP
 
 IP provides network-layer packet delivery.
 
@@ -490,7 +485,7 @@ This distinction is fundamental.
 
 ---
 
-# 10. IPv4
+### 10. IPv4
 
 IPv4 addresses are 32 bits.
 
@@ -510,7 +505,7 @@ IPv4 addressing is normally expressed using four decimal octets.
 
 ---
 
-# 11. SUBNETS
+### 11. SUBNETS
 
 Suppose:
 
@@ -541,7 +536,7 @@ Subnetting allows networks to be divided into smaller logical networks.
 
 ---
 
-# 12. DEFAULT GATEWAY
+### 12. DEFAULT GATEWAY
 
 Suppose your host is:
 
@@ -573,7 +568,7 @@ OTHER NETWORKS
 
 ---
 
-# 13. ROUTING
+### 13. ROUTING
 
 Routers maintain routing information.
 
@@ -602,7 +597,7 @@ The router examines the destination IP and chooses a route.
 
 ---
 
-# 14. ICMP
+### 14. ICMP
 
 ICMP is used for network control and diagnostic messages.
 
@@ -633,7 +628,7 @@ HOST A
 
 ---
 
-# 15. NAT
+### 15. NAT
 
 NAT:
 
@@ -661,7 +656,7 @@ This is a major reason private addresses can coexist behind one public IPv4 addr
 
 ---
 
-# 16. TCP
+### 16. TCP
 
 TCP gives the application:
 
@@ -688,7 +683,7 @@ BYTE STREAM
 
 ---
 
-# 17. TCP HANDSHAKE
+### 17. TCP HANDSHAKE
 
 ```text
 CLIENT                         SERVER
@@ -707,7 +702,7 @@ The connection begins with synchronized protocol state.
 
 ---
 
-# 18. TCP SEQUENCE NUMBERS
+### 18. TCP SEQUENCE NUMBERS
 
 Suppose the conceptual stream is:
 
@@ -739,7 +734,7 @@ TCP can recognize that part of the sequence is missing and recover using retrans
 
 ---
 
-# 19. TCP ACKNOWLEDGEMENTS
+### 19. TCP ACKNOWLEDGEMENTS
 
 The receiver acknowledges received data.
 
@@ -754,7 +749,7 @@ Acknowledgements allow the sender to determine what the receiver has successfull
 
 ---
 
-# 20. TCP RETRANSMISSION
+### 20. TCP RETRANSMISSION
 
 If packets are lost:
 
@@ -772,7 +767,7 @@ The application normally does not implement this itself.
 
 ---
 
-# 21. FLOW CONTROL
+### 21. FLOW CONTROL
 
 Flow control protects the receiver.
 
@@ -792,7 +787,7 @@ TCP uses a receive window and related mechanisms to communicate how much unackno
 
 ---
 
-# 22. CONGESTION CONTROL
+### 22. CONGESTION CONTROL
 
 Congestion control protects the network.
 
@@ -820,7 +815,7 @@ CONGESTION CONTROL
 
 ---
 
-# 23. TCP BYTE STREAM AND FRAMING
+### 23. TCP BYTE STREAM AND FRAMING
 
 This is a critical concept.
 
@@ -878,7 +873,7 @@ HTTP, gRPC, and other protocols define their own framing rules.
 
 ---
 
-# 24. UDP
+### 24. UDP
 
 UDP is datagram oriented.
 
@@ -906,7 +901,7 @@ QUIC is a major example.
 
 ---
 
-# 25. TCP VS UDP
+### 25. TCP VS UDP
 
 ```text
 ┌────────────────────┬─────────────────────────┐
@@ -924,7 +919,7 @@ QUIC is a major example.
 
 ---
 
-# 26. DNS
+### 26. DNS
 
 DNS:
 
@@ -964,7 +959,7 @@ records.
 
 ---
 
-# 27. DNS LOOKUP
+### 27. DNS LOOKUP
 
 A simplified lookup:
 
@@ -991,7 +986,7 @@ This means DNS is also a distributed caching system.
 
 ---
 
-# 28. SOCKET API
+### 28. SOCKET API
 
 Your Rust program does not usually build Ethernet frames manually.
 
@@ -1023,16 +1018,16 @@ UdpSocket
 
 ---
 
-# 29. DAY 1 RUST CODE
+### 29. DAY 1 RUST CODE
 
-## Cargo.toml
+#### Cargo.toml
 
 ```toml
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 ```
 
-## TCP + UDP lab
+#### TCP + UDP lab
 
 ```rust
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -1125,7 +1120,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ---
 
-# 30. DAY 1 DEBUGGING LAB
+### 30. DAY 1 DEBUGGING LAB
 
 Use OS tools.
 
@@ -1167,15 +1162,11 @@ What happens when no process is listening?
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 2 HTTP, REST AND WEB NETWORKING
+----------------------------------------------
 
-# DAY 2
-
-# HTTP, REST AND WEB NETWORKING
-
-======================================================================
-
-# 1. WHY HTTP EXISTS
+### 1. WHY HTTP EXISTS
 
 TCP gives:
 
@@ -1208,7 +1199,7 @@ IP
 
 ---
 
-# 2. HTTP REQUEST
+### 2. HTTP REQUEST
 
 ```http
 GET /users/42 HTTP/1.1
@@ -1230,7 +1221,7 @@ Not every request has a body.
 
 ---
 
-# 3. HTTP RESPONSE
+### 3. HTTP RESPONSE
 
 ```http
 HTTP/1.1 200 OK
@@ -1253,7 +1244,7 @@ BODY
 
 ---
 
-# 4. HTTP METHODS
+### 4. HTTP METHODS
 
 ```text
 GET
@@ -1284,7 +1275,7 @@ Do not assume these properties are identical.
 
 ---
 
-# 5. HTTP STATUS CODES
+### 5. HTTP STATUS CODES
 
 ```text
 1xx informational
@@ -1323,7 +1314,7 @@ Important examples:
 
 ---
 
-# 6. HEADERS
+### 6. HEADERS
 
 Headers carry metadata.
 
@@ -1358,7 +1349,7 @@ request correlation
 
 ---
 
-# 7. CONTENT-TYPE
+### 7. CONTENT-TYPE
 
 These are not equivalent:
 
@@ -1385,7 +1376,7 @@ means:
 
 ---
 
-# 8. ACCEPT
+### 8. ACCEPT
 
 The client can say:
 
@@ -1409,7 +1400,7 @@ which describes what is actually being sent.
 
 ---
 
-# 9. REST
+### 9. REST
 
 REST is an architectural style.
 
@@ -1434,7 +1425,7 @@ DELETE /users/1
 
 ---
 
-# 10. STATELESSNESS
+### 10. STATELESSNESS
 
 A traditional REST-style architecture emphasizes stateless requests.
 
@@ -1456,7 +1447,7 @@ It means the protocol interaction should not require hidden conversational state
 
 ---
 
-# 11. IDEMPOTENCY
+### 11. IDEMPOTENCY
 
 Suppose:
 
@@ -1508,7 +1499,7 @@ Idempotent semantics make retry safer.
 
 ---
 
-# 12. CACHING
+### 12. CACHING
 
 HTTP supports caching semantics.
 
@@ -1547,7 +1538,7 @@ Server:
 
 ---
 
-# 13. COOKIES
+### 13. COOKIES
 
 A server can send:
 
@@ -1588,7 +1579,7 @@ SameSite
 
 ---
 
-# 14. PROXY
+### 14. PROXY
 
 A proxy sits between client and destination.
 
@@ -1614,7 +1605,7 @@ routing
 
 ---
 
-# 15. REVERSE PROXY
+### 15. REVERSE PROXY
 
 A reverse proxy sits in front of servers.
 
@@ -1638,7 +1629,7 @@ observability
 
 ---
 
-# 16. AXUM
+### 16. AXUM
 
 Axum maps HTTP requests to Rust handlers.
 
@@ -1663,7 +1654,7 @@ HTTP RESPONSE
 
 ---
 
-# 17. RUST REST API
+### 17. RUST REST API
 
 ```toml
 [dependencies]
@@ -1727,7 +1718,7 @@ async fn home() -> &'static str {
 
 ---
 
-# 18. BETTER 404 DESIGN
+### 18. BETTER 404 DESIGN
 
 Avoid:
 
@@ -1778,7 +1769,7 @@ async fn get_user(
 
 ---
 
-# 19. REQUEST VALIDATION
+### 19. REQUEST VALIDATION
 
 Bad:
 
@@ -1824,7 +1815,7 @@ business rules
 
 ---
 
-# 20. DAY 2 LAB
+### 20. DAY 2 LAB
 
 Use:
 
@@ -1861,15 +1852,11 @@ response
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 3 CRYPTOGRAPHY
+----------------------------------------------
 
-# DAY 3
-
-# CRYPTOGRAPHY
-
-======================================================================
-
-# 1. WHY CRYPTOGRAPHY EXISTS
+### 1. WHY CRYPTOGRAPHY EXISTS
 
 Cryptography gives us mechanisms for:
 
@@ -1887,7 +1874,7 @@ It is a toolbox.
 
 ---
 
-# 2. THREAT MODEL
+### 2. THREAT MODEL
 
 Imagine an attacker:
 
@@ -1917,7 +1904,7 @@ Security mechanisms are designed against specific threats.
 
 ---
 
-# 3. CONFIDENTIALITY
+### 3. CONFIDENTIALITY
 
 Goal:
 
@@ -1941,7 +1928,7 @@ NETWORK
 
 ---
 
-# 4. INTEGRITY
+### 4. INTEGRITY
 
 Goal:
 
@@ -1963,7 +1950,7 @@ Modern authenticated encryption generally combines encryption and integrity prot
 
 ---
 
-# 5. AUTHENTICATION
+### 5. AUTHENTICATION
 
 Goal:
 
@@ -1984,7 +1971,7 @@ shared secret
 
 ---
 
-# 6. ENCRYPTION VS HASHING
+### 6. ENCRYPTION VS HASHING
 
 Encryption:
 
@@ -2013,7 +2000,7 @@ Hashing is not designed to be reversed.
 
 ---
 
-# 7. SYMMETRIC CRYPTOGRAPHY
+### 7. SYMMETRIC CRYPTOGRAPHY
 
 One shared secret key:
 
@@ -2041,7 +2028,7 @@ Symmetric algorithms are efficient.
 
 ---
 
-# 8. AUTHENTICATED ENCRYPTION
+### 8. AUTHENTICATED ENCRYPTION
 
 Modern protocols generally need:
 
@@ -2078,7 +2065,7 @@ Associated authenticated data is not encrypted but is integrity-protected.
 
 ---
 
-# 9. ASYMMETRIC CRYPTOGRAPHY
+### 9. ASYMMETRIC CRYPTOGRAPHY
 
 Two related keys:
 
@@ -2107,7 +2094,7 @@ Modern TLS uses asymmetric mechanisms primarily for authentication/key establish
 
 ---
 
-# 10. DIGITAL SIGNATURE
+### 10. DIGITAL SIGNATURE
 
 ```text
 MESSAGE
@@ -2136,7 +2123,7 @@ A successful signature verification provides cryptographic evidence linked to th
 
 ---
 
-# 11. KEY EXCHANGE
+### 11. KEY EXCHANGE
 
 Client and server need shared secret material.
 
@@ -2159,7 +2146,7 @@ Ephemeral key agreement gives important security properties such as forward secr
 
 ---
 
-# 12. FORWARD SECRECY
+### 12. FORWARD SECRECY
 
 Suppose an attacker records encrypted traffic today.
 
@@ -2187,7 +2174,7 @@ everything → one permanent encryption key
 
 ---
 
-# 13. HASH FUNCTIONS
+### 13. HASH FUNCTIONS
 
 A hash function maps arbitrary input to a fixed-size digest.
 
@@ -2213,7 +2200,7 @@ collision resistance
 
 ---
 
-# 14. PASSWORD HASHING
+### 14. PASSWORD HASHING
 
 Password storage should not use ordinary fast hashes such as:
 
@@ -2253,7 +2240,7 @@ A password verifier normally needs only to determine whether the supplied passwo
 
 ---
 
-# 15. SALTS
+### 15. SALTS
 
 A salt is a unique random value used with password hashing.
 
@@ -2286,7 +2273,7 @@ This prevents identical passwords from automatically producing identical stored 
 
 ---
 
-# 16. RANDOMNESS
+### 16. RANDOMNESS
 
 Security depends heavily on cryptographically secure randomness.
 
@@ -2304,7 +2291,7 @@ Do not use predictable general-purpose randomness for security-sensitive values.
 
 ---
 
-# 17. NONCE
+### 17. NONCE
 
 Nonce:
 
@@ -2330,7 +2317,7 @@ is critical.
 
 ---
 
-# 18. TLS
+### 18. TLS
 
 TLS combines multiple cryptographic ideas.
 
@@ -2352,7 +2339,7 @@ authentication key setup encryption
 
 ---
 
-# 19. TLS HANDSHAKE
+### 19. TLS HANDSHAKE
 
 Conceptual TLS 1.3 flow:
 
@@ -2385,7 +2372,7 @@ protect application traffic
 
 ---
 
-# 20. TLS RECORD LAYER
+### 20. TLS RECORD LAYER
 
 After the handshake, application data is carried in TLS records.
 
@@ -2410,7 +2397,7 @@ It sees the resulting protected byte stream.
 
 ---
 
-# 21. CERTIFICATES
+### 21. CERTIFICATES
 
 A certificate is approximately:
 
@@ -2450,7 +2437,7 @@ SAN:
 
 ---
 
-# 22. PKI
+### 22. PKI
 
 PKI provides the machinery for trust relationships.
 
@@ -2470,7 +2457,7 @@ The leaf certificate is validated through its chain.
 
 ---
 
-# 23. CERTIFICATE CHAIN VALIDATION
+### 23. CERTIFICATE CHAIN VALIDATION
 
 Conceptually:
 
@@ -2500,7 +2487,7 @@ A failure at any relevant step can result in rejection.
 
 ---
 
-# 24. SAN
+### 24. SAN
 
 Subject Alternative Name contains identities.
 
@@ -2533,7 +2520,7 @@ The certificate needs an appropriate IP identity.
 
 ---
 
-# 25. TLS VS HTTPS
+### 25. TLS VS HTTPS
 
 TLS:
 
@@ -2561,7 +2548,7 @@ Your current TLS server proves TLS, not a complete HTTP application server.
 
 ---
 
-# 26. DAY 3 RUST TLS CODE
+### 26. DAY 3 RUST TLS CODE
 
 Your current approach uses modern `rustls::pki_types`.
 
@@ -2659,15 +2646,11 @@ loop {
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 4 mTLS, PKI, MACHINE IDENTITY AND ZERO TRUST
+----------------------------------------------
 
-# DAY 4
-
-# mTLS, PKI, MACHINE IDENTITY AND ZERO TRUST
-
-======================================================================
-
-# 1. ONE-WAY TLS
+### 1. ONE-WAY TLS
 
 ```text
 CLIENT                         SERVER
@@ -2684,7 +2667,7 @@ CLIENT                         SERVER
 
 ---
 
-# 2. mTLS
+### 2. mTLS
 
 ```text
 CLIENT                         SERVER
@@ -2715,7 +2698,7 @@ client authentication
 
 ---
 
-# 3. OUR PKI
+### 3. OUR PKI
 
 ```text
                   RUSTFUL TEST CA
@@ -2732,7 +2715,7 @@ client authentication
 
 ---
 
-# 4. CA CERTIFICATE
+### 4. CA CERTIFICATE
 
 ```text
 ca.crt
@@ -2761,7 +2744,7 @@ by systems trusting CA
 
 ---
 
-# 5. CSR
+### 5. CSR
 
 Certificate Signing Request:
 
@@ -2784,7 +2767,7 @@ The private key is not supposed to be transferred to the CA.
 
 ---
 
-# 6. SERVER CERTIFICATE
+### 6. SERVER CERTIFICATE
 
 ```text
 basicConstraints = CA:FALSE
@@ -2803,7 +2786,7 @@ subjectAltName =
 
 ---
 
-# 7. CLIENT CERTIFICATE
+### 7. CLIENT CERTIFICATE
 
 ```text
 basicConstraints = CA:FALSE
@@ -2824,7 +2807,7 @@ client.crt
 
 ---
 
-# 8. TRUST STORE
+### 8. TRUST STORE
 
 The client trusts:
 
@@ -2859,7 +2842,7 @@ validate CLIENT certificate
 
 ---
 
-# 9. RUST mTLS CONFIGURATION
+### 9. RUST mTLS CONFIGURATION
 
 Your modern code uses:
 
@@ -2917,7 +2900,7 @@ let client_config =
 
 ---
 
-# 10. CLIENT CONNECTION
+### 10. CLIENT CONNECTION
 
 ```rust
 let tcp =
@@ -2957,7 +2940,7 @@ mTLS connection
 
 ---
 
-# 11. AUTHENTICATION VS AUTHORIZATION
+### 11. AUTHENTICATION VS AUTHORIZATION
 
 Authentication:
 
@@ -2988,7 +2971,7 @@ We need policy.
 
 ---
 
-# 12. RBAC
+### 12. RBAC
 
 Role-Based Access Control:
 
@@ -3018,7 +3001,7 @@ admin
 
 ---
 
-# 13. ABAC
+### 13. ABAC
 
 Attribute-Based Access Control can evaluate attributes.
 
@@ -3051,7 +3034,7 @@ This becomes useful in larger systems.
 
 ---
 
-# 14. ZERO TRUST
+### 14. ZERO TRUST
 
 Do not assume:
 
@@ -3081,7 +3064,7 @@ RESOURCE
 
 ---
 
-# 15. MICROSERVICE IDENTITY
+### 15. MICROSERVICE IDENTITY
 
 ```text
                 CA
@@ -3098,7 +3081,7 @@ Authorization still determines permissions.
 
 ---
 
-# 16. ZERO TRUST MICROSEGMENTATION
+### 16. ZERO TRUST MICROSEGMENTATION
 
 Instead of:
 
@@ -3120,7 +3103,7 @@ Identity and policy become explicit.
 
 ---
 
-# 17. mTLS FAILURE LAB
+### 17. mTLS FAILURE LAB
 
 Break:
 
@@ -3147,15 +3130,11 @@ WHAT SECURITY PROPERTY DID IT PROTECT?
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 5 HTTP/2, gRPC, PROTOBUF, QUIC AND HTTP/3
+----------------------------------------------
 
-# DAY 5
-
-# HTTP/2, gRPC, PROTOBUF, QUIC AND HTTP/3
-
-======================================================================
-
-# 1. WHY MODERN PROTOCOLS?
+### 1. WHY MODERN PROTOCOLS?
 
 HTTP/1.1 works well but has limitations in how many independent requests interact over connections.
 
@@ -3171,7 +3150,7 @@ strong schemas
 
 ---
 
-# 2. HTTP/2
+### 2. HTTP/2
 
 HTTP/2 introduces concepts including:
 
@@ -3186,7 +3165,7 @@ connection-level flow control
 
 ---
 
-# 3. HTTP/2 CONNECTION
+### 3. HTTP/2 CONNECTION
 
 Conceptually:
 
@@ -3205,7 +3184,7 @@ Multiple logical streams share one TCP connection.
 
 ---
 
-# 4. HTTP/2 FRAMES
+### 4. HTTP/2 FRAMES
 
 Conceptually:
 
@@ -3223,7 +3202,7 @@ Frames are associated with streams or the connection.
 
 ---
 
-# 5. MULTIPLEXING
+### 5. MULTIPLEXING
 
 Without multiplexing:
 
@@ -3253,7 +3232,7 @@ connection
 
 ---
 
-# 6. TCP HEAD-OF-LINE EFFECT
+### 6. TCP HEAD-OF-LINE EFFECT
 
 Suppose:
 
@@ -3285,7 +3264,7 @@ This is one motivation for QUIC.
 
 ---
 
-# 7. gRPC
+### 7. gRPC
 
 RPC:
 
@@ -3318,7 +3297,7 @@ local process
 
 ---
 
-# 8. gRPC + HTTP/2 + PROTOBUF
+### 8. gRPC + HTTP/2 + PROTOBUF
 
 ```text
 gRPC
@@ -3332,7 +3311,7 @@ gRPC
 
 ---
 
-# 9. PROTOBUF
+### 9. PROTOBUF
 
 Schema:
 
@@ -3354,7 +3333,7 @@ The schema becomes generated language types.
 
 ---
 
-# 10. FIELD NUMBERS
+### 10. FIELD NUMBERS
 
 ```proto
 string name = 2;
@@ -3376,7 +3355,7 @@ Do not casually renumber existing fields in a deployed protocol.
 
 ---
 
-# 11. gRPC SERVICE
+### 11. gRPC SERVICE
 
 ```proto
 service UserService {
@@ -3392,7 +3371,7 @@ service UserService {
 
 ---
 
-# 12. RPC TYPES
+### 12. RPC TYPES
 
 ```text
 UNARY
@@ -3437,7 +3416,7 @@ request  ↔ response
 
 ---
 
-# 13. TONIC
+### 13. TONIC
 
 Rust implementation:
 
@@ -3472,7 +3451,7 @@ tonic-build = "..."
 
 ---
 
-# 14. build.rs
+### 14. build.rs
 
 ```rust
 fn main() {
@@ -3485,7 +3464,7 @@ fn main() {
 
 ---
 
-# 15. BASIC gRPC SERVER
+### 15. BASIC gRPC SERVER
 
 ```rust
 use tonic::{
@@ -3558,7 +3537,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ---
 
-# 16. QUIC
+### 16. QUIC
 
 QUIC runs over UDP:
 
@@ -3585,7 +3564,7 @@ QUIC implements sophisticated transport behavior.
 
 ---
 
-# 17. QUIC PROVIDES
+### 17. QUIC PROVIDES
 
 Conceptually:
 
@@ -3601,7 +3580,7 @@ stream independence
 
 ---
 
-# 18. QUIC STREAMS
+### 18. QUIC STREAMS
 
 A QUIC connection can contain multiple streams.
 
@@ -3618,7 +3597,7 @@ Loss affecting one stream does not necessarily create the same cross-stream tran
 
 ---
 
-# 19. HTTP/3
+### 19. HTTP/3
 
 ```text
 HTTP/3
@@ -3647,7 +3626,7 @@ IP
 
 ---
 
-# 20. DAY 5 EXPERIMENT
+### 20. DAY 5 EXPERIMENT
 
 Compare:
 
@@ -3677,15 +3656,11 @@ HTTP/3 + QUIC
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 6 SECURITY ENGINEERING
+----------------------------------------------
 
-# DAY 6
-
-# SECURITY ENGINEERING
-
-======================================================================
-
-# 1. SECURITY IS A SYSTEM
+### 1. SECURITY IS A SYSTEM
 
 Do not think:
 
@@ -3725,7 +3700,7 @@ OBSERVABILITY
 
 ---
 
-# 2. THREAT MODELING
+### 2. THREAT MODELING
 
 Before implementing a security control, ask:
 
@@ -3745,7 +3720,7 @@ What trust assumptions exist?
 
 ---
 
-# 3. ATTACK SURFACES
+### 3. ATTACK SURFACES
 
 For a service:
 
@@ -3766,7 +3741,7 @@ Each is an attack surface.
 
 ---
 
-# 4. AUTHENTICATION METHODS
+### 4. AUTHENTICATION METHODS
 
 Examples:
 
@@ -3791,7 +3766,7 @@ operational complexity
 
 ---
 
-# 5. SESSION AUTHENTICATION
+### 5. SESSION AUTHENTICATION
 
 Conceptually:
 
@@ -3824,7 +3799,7 @@ CSRF protections where relevant
 
 ---
 
-# 6. JWT
+### 6. JWT
 
 JWT:
 
@@ -3852,7 +3827,7 @@ The signature protects integrity/authenticity of the claims.
 
 ---
 
-# 7. JWT CLAIMS
+### 7. JWT CLAIMS
 
 Examples:
 
@@ -3870,7 +3845,7 @@ A service should validate claims appropriate to the security design.
 
 ---
 
-# 8. OAUTH CONCEPTS
+### 8. OAUTH CONCEPTS
 
 OAuth is fundamentally an authorization framework.
 
@@ -3902,7 +3877,7 @@ JWT may be used as one token format.
 
 ---
 
-# 9. API KEYS
+### 9. API KEYS
 
 An API key is a bearer-style credential in many systems.
 
@@ -3927,7 +3902,7 @@ logging
 
 ---
 
-# 10. RBAC
+### 10. RBAC
 
 ```text
 IDENTITY
@@ -3953,7 +3928,7 @@ reader
 
 ---
 
-# 11. LEAST PRIVILEGE
+### 11. LEAST PRIVILEGE
 
 Give every identity only what it needs.
 
@@ -3972,7 +3947,7 @@ Least privilege reduces damage if the identity is compromised.
 
 ---
 
-# 12. RATE LIMITING
+### 12. RATE LIMITING
 
 Basic model:
 
@@ -4004,7 +3979,7 @@ leaky bucket
 
 ---
 
-# 13. TOKEN BUCKET
+### 13. TOKEN BUCKET
 
 Conceptually:
 
@@ -4033,7 +4008,7 @@ This allows controlled bursts.
 
 ---
 
-# 14. INPUT VALIDATION
+### 14. INPUT VALIDATION
 
 Security-sensitive request pipeline:
 
@@ -4060,7 +4035,7 @@ Never rely only on client-side validation.
 
 ---
 
-# 15. SECURE ERROR HANDLING
+### 15. SECURE ERROR HANDLING
 
 Do not expose internal details unnecessarily.
 
@@ -4083,7 +4058,7 @@ while detailed diagnostics go to controlled logs.
 
 ---
 
-# 16. SECRET MANAGEMENT
+### 16. SECRET MANAGEMENT
 
 Secrets include:
 
@@ -4108,7 +4083,7 @@ Prefer controlled secret injection.
 
 ---
 
-# 17. LOGGING
+### 17. LOGGING
 
 Useful fields:
 
@@ -4137,7 +4112,7 @@ unless there is an exceptional and carefully justified security design.
 
 ---
 
-# 18. METRICS
+### 18. METRICS
 
 Track:
 
@@ -4156,7 +4131,7 @@ This turns the service into an observable system.
 
 ---
 
-# 19. DISTRIBUTED TRACING
+### 19. DISTRIBUTED TRACING
 
 ```text
 TRACE
@@ -4172,7 +4147,7 @@ A trace ID connects work performed across processes.
 
 ---
 
-# 20. DEPENDENCY SECURITY
+### 20. DEPENDENCY SECURITY
 
 A Rust service depends on crates.
 
@@ -4195,7 +4170,7 @@ therefore my application is secure."
 
 ---
 
-# 21. SECURE CODING PRINCIPLE
+### 21. SECURE CODING PRINCIPLE
 
 Do not implement cryptographic primitives yourself unless you are explicitly studying cryptography implementation.
 
@@ -4220,15 +4195,11 @@ The educational goal is to understand the primitives and protocols, not to creat
 
 ---
 
-======================================================================
+----------------------------------------------
+### DAY 7 FINAL SECURE DISTRIBUTED RUST SERVICE
+----------------------------------------------
 
-# DAY 7
-
-# FINAL SECURE DISTRIBUTED RUST SERVICE
-
-======================================================================
-
-# 1. FINAL ARCHITECTURE
+### 1. FINAL ARCHITECTURE
 
 ```text
                          CLIENT
@@ -4270,7 +4241,7 @@ The educational goal is to understand the primitives and protocols, not to creat
 
 ---
 
-# 2. FINAL PROJECT COMPONENTS
+### 2. FINAL PROJECT COMPONENTS
 
 Suggested Rust structure:
 
@@ -4304,7 +4275,7 @@ secure-service/
 
 ---
 
-# 3. APPLICATION STATE
+### 3. APPLICATION STATE
 
 ```rust
 #[derive(Clone)]
@@ -4326,7 +4297,7 @@ Conceptually:
 
 ---
 
-# 4. USER MODEL
+### 4. USER MODEL
 
 ```rust
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -4347,7 +4318,7 @@ enum Role {
 
 ---
 
-# 5. METRICS
+### 5. METRICS
 
 ```rust
 #[derive(Debug, Default, Clone, Serialize)]
@@ -4363,7 +4334,7 @@ struct Metrics {
 
 ---
 
-# 6. REST ENDPOINTS
+### 6. REST ENDPOINTS
 
 ```text
 GET  /health
@@ -4376,7 +4347,7 @@ GET  /metrics
 
 ---
 
-# 7. SECURITY PIPELINE
+### 7. SECURITY PIPELINE
 
 Every protected request:
 
@@ -4410,7 +4381,7 @@ Every protected request:
 
 ---
 
-# 8. gRPC SERVICE
+### 8. gRPC SERVICE
 
 ```proto
 syntax = "proto3";
@@ -4442,7 +4413,7 @@ message UserResponse {
 
 ---
 
-# 9. HEALTH CHECK
+### 9. HEALTH CHECK
 
 Health endpoints answer:
 
@@ -4468,7 +4439,7 @@ READINESS
 
 ---
 
-# 10. AUTHORIZATION EXAMPLE
+### 10. AUTHORIZATION EXAMPLE
 
 Conceptually:
 
@@ -4509,7 +4480,7 @@ permission
 
 ---
 
-# 11. RATE LIMITER
+### 11. RATE LIMITER
 
 A simplified asynchronous limiter:
 
@@ -4577,7 +4548,7 @@ would generally be necessary for globally consistent limits.
 
 ---
 
-# 12. AUTHENTICATION FLOW
+### 12. AUTHENTICATION FLOW
 
 Example:
 
@@ -4602,7 +4573,7 @@ AUTHORIZATION POLICY
 
 ---
 
-# 13. OBSERVABILITY FLOW
+### 13. OBSERVABILITY FLOW
 
 ```text
 REQUEST
@@ -4624,7 +4595,7 @@ REQUEST
 
 ---
 
-# 14. FAILURE MATRIX
+### 14. FAILURE MATRIX
 
 Build a table during the final lab:
 
@@ -4651,11 +4622,9 @@ The exact status returned should match your API's documented contract.
 
 ---
 
-======================================================================
-
-# THE NETWORK PACKET MENTAL MODEL
-
-======================================================================
+----------------------------------------------
+### THE NETWORK PACKET MENTAL MODEL
+----------------------------------------------
 
 By the end of the week, understand this:
 
@@ -4746,7 +4715,7 @@ mTLS
 
 ---
 
-# COMPLETE SECURITY MENTAL MODEL
+### COMPLETE SECURITY MENTAL MODEL
 
 ```text
                     TRUST
@@ -4799,7 +4768,7 @@ These distinctions are some of the most important things to retain.
 
 ---
 
-# COMPLETE PROTOCOL MAP
+### COMPLETE PROTOCOL MAP
 
 ```text
                          APPLICATION
@@ -4837,7 +4806,7 @@ These distinctions are some of the most important things to retain.
 
 ---
 
-# COMPLETE CRYPTOGRAPHY MAP
+### COMPLETE CRYPTOGRAPHY MAP
 
 ```text
 CRYPTOGRAPHY
@@ -4883,7 +4852,7 @@ The exact choice of primitive should always be driven by the protocol/library's 
 
 ---
 
-# COMPLETE PKI MAP
+### COMPLETE PKI MAP
 
 ```text
                         ROOT CA
@@ -4932,7 +4901,7 @@ ACCEPT
 
 ---
 
-# COMPLETE DISTRIBUTED-SYSTEM MENTAL MODEL
+### COMPLETE DISTRIBUTED-SYSTEM MENTAL MODEL
 
 ```text
 SERVICE A
@@ -4984,7 +4953,7 @@ Distributed systems engineering means designing for those failures rather than p
 
 ---
 
-# FINAL WEEK PROJECT CHECKLIST
+### FINAL WEEK PROJECT CHECKLIST
 
 ```text
 NETWORKING
@@ -5151,7 +5120,7 @@ RUST
 
 ---
 
-# FINAL STANDARD
+### FINAL STANDARD
 
 At the end of the week, do not measure success by:
 

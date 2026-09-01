@@ -1,61 +1,80 @@
-use tokio::net::{TcpListener, TcpStream, UdpSocket};
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use axum::{
+  routing::{get, post},
+  Router, Json,
+  extract::{State, Path},
+  http::StatusCode,
+  response::IntoResponse,
+};
+use serde::{Serialize, Deserialize};
+use std::sync::{Arc, Mutex};
+use std::collections::HashMap;
 
-// TCP Server
+#[derive(Debug, Clone, Serialize, Deserialize)]
+struct User {
+  id: u64,
+  name: String,
+  email: String,
+}
+
+type UserStore = Arc<Mutex<HashMap<u64, User>>>;
+
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-  // TCP Echo Server
-  let tcp_listener = TcpListener::bind("127.0.0.1:8080").await?;
-  println!("TCP Server on :8080");
+async fn main() {
+  let store: UserStore = Arc::new(Mutex::new(HashMap::new()));
   
-  tokio::spawn(async move {
-      loop {
-          let (mut socket, addr) = tcp_listener.accept().await.unwrap();
-          tokio::spawn(async move {
-              let mut buf = [0; 1024];
-              loop {
-                  match socket.read(&mut buf).await {
-                      Ok(0) => break, // Connection closed
-                      Ok(n) => {
-                          socket.write_all(&buf[..n]).await.unwrap();
-                      }
-                      Err(_) => break,
-                  }
-              }
-              println!("Client {} disconnected", addr);
-          });
-      }
-  });
+  let app = Router::new()
+      .route("/", get(home))
+      .route("/users", post(create_user).get(list_users))
+      .route("/users/{id}", get(get_user).delete(delete_user))
+      .with_state(store);
   
-  // TCP Client
-  let mut client = TcpStream::connect("127.0.0.1:8080").await?;
-  client.write_all(b"Hello TCP!").await?;
-  
-  let mut buf = [0; 1024];
-  let n = client.read(&mut buf).await?;
-  println!("TCP Response: {}", String::from_utf8_lossy(&buf[..n]));
-  
-  // UDP Server
-  let udp_socket = UdpSocket::bind("127.0.0.1:8081").await?;
-  println!("UDP Server on :8081");
-  
-  tokio::spawn(async move {
-      let mut buf = [0; 1024];
-      loop {
-          let (n, addr) = udp_socket.recv_from(&mut buf).await.unwrap();
-          udp_socket.send_to(&buf[..n], addr).await.unwrap();
-      }
-  });
-  
-  // UDP Client
-  let udp_client = UdpSocket::bind("127.0.0.1:0").await?;
-  udp_client.connect("127.0.0.1:8081").await?;
-  udp_client.send(b"Hello UDP!").await?;
-  
-  let mut buf = [0; 1024];
-  let n = udp_client.recv(&mut buf).await?;
-  println!("UDP Response: {}", String::from_utf8_lossy(&buf[..n]));
-  
-  tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
-  Ok(())
+  let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+  println!("Server running on http://localhost:3000");
+  axum::serve(listener, app).await.unwrap();
+}
+
+async fn home() -> &'static str {
+  "REST API Running!"
+}
+
+async fn create_user(
+  State(store): State<UserStore>,
+  Json(user): Json<User>,
+) -> impl IntoResponse {
+  let mut users = store.lock().unwrap();
+  users.insert(user.id, user.clone());
+  (StatusCode::CREATED, Json(user))
+}
+
+async fn get_user(
+  State(store): State<UserStore>,
+  Path(id): Path<u64>,
+) -> impl IntoResponse {
+  let users = store.lock().unwrap();
+  match users.get(&id) {
+      Some(user) => (StatusCode::OK, Json(user.clone())),
+      None => (StatusCode::NOT_FOUND, Json(User {
+          id: 0,
+          name: "".to_string(),
+          email: "".to_string(),
+      })),
+  }
+}
+
+async fn list_users(State(store): State<UserStore>) -> impl IntoResponse {
+  let users = store.lock().unwrap();
+  let user_list: Vec<User> = users.values().cloned().collect();
+  Json(user_list)
+}
+
+async fn delete_user(
+  State(store): State<UserStore>,
+  Path(id): Path<u64>,
+) -> StatusCode {
+  let mut users = store.lock().unwrap();
+  if users.remove(&id).is_some() {
+      StatusCode::NO_CONTENT
+  } else {
+      StatusCode::NOT_FOUND
+  }
 }

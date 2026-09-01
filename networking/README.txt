@@ -55,4 +55,126 @@ Client → ACK → Server
 
 TCP and UDP Server/Client Hello.
 
+> cargo run
 
+
+📚 Hour 2: HTTP Protocol & REST APIs (60 min)
+
+HTTP Protocol: (15 min)
+-------------
+
+┌─────────────────────────────────────────────┐
+│ HTTP Request Format:                        │
+│ GET /api/users HTTP/1.1                     │
+│ Host: example.com                           │
+│ Content-Type: application/json              │
+│                                             │
+│ {"id": 1}                                   │
+├─────────────────────────────────────────────┤
+│ HTTP Response Format:                       │
+│ HTTP/1.1 200 OK                             │
+│ Content-Type: application/json              │
+│ Content-Length: 27                          │
+│                                             │
+│ {"name": "John", "age": 30}                 │
+└─────────────────────────────────────────────┘
+
+Methods: GET, POST, PUT, DELETE, PATCH
+Status: 2xx Success, 3xx Redirect, 4xx Client Error, 5xx Server Error
+
+
+REST API with Axum (45 min)
+--------------------------
+
+i. Home (GET /)
+
+Request:
+---------
+GET / HTTP/1.1
+Host: localhost:3000
+Accept: */*
+
+Response:
+---------
+HTTP/1.1 200 OK
+content-type: text/plain; charset=utf-8
+content-length: 17
+REST API Running!
+
+
+ii. Create User (POST /users)
+
+Request:
+---------
+POST /users HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+{
+  "id": 1,
+  "name": "Alice",
+  "email": "alice@example.com"
+}
+
+Response:
+---------
+HTTP/1.1 201 Created
+content-type: application/json
+content-length: 53
+{"id":1,"name":"Alice","email":"alice@example.com"}
+
+
+iii. List All Users (GET /users)
+
+Request:
+---------
+GET /users HTTP/1.1
+Host: localhost:3000
+Accept: application/json
+
+Response:
+---------
+HTTP/1.1 200 OK
+content-type: application/json
+content-length: 55
+[{"id":1,"name":"Alice","email":"alice@example.com"}]
+
+
+iv. Get User (GET /users/{id})
+
+Request:
+---------
+GET /users/1 HTTP/1.1
+Host: localhost:3000
+Accept: application/json
+
+Response:
+---------
+HTTP/1.1 200 OK
+content-type: application/json
+content-length: 51
+{"id":1,"name":"Alice","email":"alice@example.com"}
+
+v. Delete User (DELETE /users/{id})
+
+Request:
+---------
+DELETE /users/1 HTTP/1.1
+Host: localhost:3000
+
+Response:
+---------
+HTTP/1.1 204 No Content
+
+vi. 404 Not Found
+
+Request:
+---------
+GET /users/1 HTTP/1.1
+
+Response:
+---------
+HTTP/1.1 404 Not Found
+content-type: application/json
+content-length: 31
+
+{"id":0,"name":"","email":""}

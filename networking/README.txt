@@ -1,15 +1,5 @@
-🚀 One-Day Networking & Security Crash Course with Rust (8 Hours)
+🚀 4 hour Networking & Security Crash Course with Rust
 ------------------------------------------------------------------
-
-┌────────────────────────────────────────────────────────────────┐
-│                    ONE-DAY MASTERY PATH                        │
-├─────────┬─────────┬─────────┬─────────┬─────────┬──────────────┤
-│ Hour 1  │ Hour 2  │ Hour 3  │ Hour 4  │ Hour 5  │  Hours 6-8   │
-│ OSI+TCP │ HTTP+   │ TLS+    │ mTLS+   │ gRPC+   │  Final       │
-│ +UDP    │ REST    │ Crypto  │ Zero    │ QUIC    │  Project     │
-│         │         │         │ Trust   │         │              │
-└─────────┴─────────┴─────────┴─────────┴─────────┴──────────────┘
-
 
 📚 Hour 1: OSI Model, TCP/UDP Fundamentals (60 min)
 
@@ -408,5 +398,4 @@ CLIENT                                      SERVER
   │                                            │
   │◄══════ encrypted TLS connection ═════════► │
   │                                            │
-
 

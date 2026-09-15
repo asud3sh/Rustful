@@ -1,9 +1,9 @@
-🚀 4 hour Networking & Security Crash Course with Rust
+🚀 Networking & Security components with Rust
 ------------------------------------------------------------------
 
-📚 Hour 1: OSI Model, TCP/UDP Fundamentals (60 min)
+📚 1: OSI Model, TCP/UDP Fundamentals
 
-0.10 OSI Model : 
+1.1 OSI Model : 
 ---------------
 
 ┌─────────────────────────────────────────────┐
@@ -20,7 +20,7 @@ Data Flow:
 Application → TCP Segments → IP Packets → Ethernet Frames → Bits
 
 
-0.25 TCP Vs UDP 
+1.2 TCP Vs UDP 
 ---------------
 
 ┌──────────────────┬──────────────────┐
@@ -40,7 +40,7 @@ Client ← SYN-ACK ← Server
 Client → ACK → Server
 
 
-0.59 Rust Implementation
+1.3 Rust Implementation
 ------------------------
 
 TCP and UDP Server/Client Hello.
@@ -48,10 +48,10 @@ TCP and UDP Server/Client Hello.
 > cargo run
 
 
-📚 Hour 2: HTTP Protocol & REST APIs (60 min)
+📚 2: HTTP Protocol & REST APIs
 
-HTTP Protocol: (15 min)
--------------
+2.1 HTTP Protocol:
+-----------------
 
 ┌─────────────────────────────────────────────┐
 │ HTTP Request Format:                        │
@@ -73,8 +73,8 @@ Methods: GET, POST, PUT, DELETE, PATCH
 Status: 2xx Success, 3xx Redirect, 4xx Client Error, 5xx Server Error
 
 
-REST API with Axum (45 min)
---------------------------
+2.2 REST API with Axum 
+----------------------
 
 i. Home (GET /)
 
@@ -171,9 +171,9 @@ content-length: 31
 
 
 
-📚 Hour 3: TLS & Cryptography (60 min)
+📚 3. TLS & Cryptography
 
-TLS Fundamentals: (20 min)
+3.1 TLS Fundamentals: 
 -----------------
 
 ┌─────────────────────────────────────────────┐
@@ -194,17 +194,17 @@ Encryption Types:
 
 Cipher Suite: TLS_AES_256_GCM_SHA384
 
-Rust TLS Implementation (40 min)
+3.2 Rust TLS Implementation
 --------------------------------
 
 > cargo run
 : HTTPS / TLS Server listening on https://localhost:8443
 
 
-📚 Hour 4: mTLS & Zero Trust Security (60 min)
+📚 4. mTLS & Zero Trust Security
 
-mTLS: Concepts (20 min)
------------------------
+4.1 mTLS: Concepts 
+---------------
 
                  CA
             ┌──────────┐
@@ -247,8 +247,8 @@ Certificate Chain:
 Root CA → Intermediate CA → Leaf Certificate
 
 
-mTLS: Implementation (40 min)
------------------------------
+4.2 mTLS: Implementation
+------------------------
 
 Need to create 3 identities:
 
